@@ -11,8 +11,8 @@ const Scene = (props) => {
     //     containerWidth={viewWidth}
     //     unit={unit}
     //   />
-    //   {blocks.map(({ density, position, width, height }) => (
-    //     <Block
+    //   {bricks.map(({ density, position, width, height }) => (
+    //     <Brick
     //       density={density}
     //       key={`${position.x}-${position.y}`}
     //       width={projectDistance(width)}

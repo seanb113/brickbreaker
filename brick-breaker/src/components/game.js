@@ -2,8 +2,8 @@ import Vector from './vector'
 import { flatten, getRandomFrom, withoutElement, updateElement } from '../utils'
 
 const PADDLE_AREA = 1 / 3
-const BLOCK_HEIGHT = 1 / 3
-const PADDLE_HEIGHT = BLOCK_HEIGHT
+const brick_HEIGHT = 1 / 3
+const PADDLE_HEIGHT = brick_HEIGHT
 const BALL_RADIUS = 1 / 5
 const DISTANCE_IN_MS = 0.005
 
@@ -39,18 +39,18 @@ export const getInitialPaddleAndBall = (width, height, paddleWidth) => {
   }
 }
 
-export const getGameStateFromLevel = ({ lives, paddleWidth, speed, blocks }) => {
-  const width = blocks[0].length
+export const getGameStateFromLevel = ({ lives, paddleWidth, speed, bricks }) => {
+  const width = bricks[0].length
   const height = width
 
-  const blocksStart = ((height - height * PADDLE_AREA) - blocks.length * BLOCK_HEIGHT) / 2
+  const bricksStart = ((height - height * PADDLE_AREA) - bricks.length * brick_HEIGHT) / 2
 
-  const rowsOfBlocks = blocks.map((row, i) =>
+  const rowsOfbricks = bricks.map((row, i) =>
     row.map((density, j) => ({
       density,
-      position: new Vector(j, blocksStart + (i * BLOCK_HEIGHT)),
+      position: new Vector(j, bricksStart + (i * brick_HEIGHT)),
       width: 1,
-      height: BLOCK_HEIGHT
+      height: brick_HEIGHT
     })
   ))
 
@@ -60,7 +60,7 @@ export const getGameStateFromLevel = ({ lives, paddleWidth, speed, blocks }) => 
   }
   return {
     size,
-    blocks: flatten(rowsOfBlocks),
+    bricks: flatten(rowsOfbricks),
     ...getInitialPaddleAndBall(width, height, paddleWidth),
     lives,
     speed
@@ -162,29 +162,29 @@ export const getNewGameState = (state, movement, timespan) => {
   if (ballLeft <= 0) return withNewBallDirection(RIGHT)
   if (ballRight >= size.width) return withNewBallDirection(LEFT)
 
-  const block = state.blocks.find(({ position, width, height }) => (
+  const brick = state.bricks.find(({ position, width, height }) => (
     isInBoundaries(ballTop, ballBottom, position.y, position.y + height) &&
     isInBoundaries(ballLeft, ballRight, position.x, position.x + width) 
   ))
-  if (block) {
-    const density = block.density - 1
-    const newBlock = { ...block, density }
-    const blocks = density < 0 ? withoutElement(state.blocks, block) : updateElement(state.blocks, block, newBlock)
+  if (brick) {
+    const density = brick.density - 1
+    const newbrick = { ...brick, density }
+    const bricks = density < 0 ? withoutElement(state.bricks, brick) : updateElement(state.bricks, brick, newbrick)
     
     const getNewBallNormal = () => {
-      const blockTop = block.position.y
-      const blockBottom = blockTop + block.height
-      const blockLeft = block.position.x
-      if (ballTop > blockTop - radius && ballBottom < blockBottom + radius) {
-        if (ballLeft < blockLeft) return LEFT
-        if (ballRight > blockLeft + block.width) return RIGHT
+      const brickTop = brick.position.y
+      const brickBottom = brickTop + brick.height
+      const brickLeft = brick.position.x
+      if (ballTop > brickTop - radius && ballBottom < brickBottom + radius) {
+        if (ballLeft < brickLeft) return LEFT
+        if (ballRight > brickLeft + brick.width) return RIGHT
       }
-      if (ballTop > blockTop) return DOWN
-      if (ballTop <= blockTop) return UP
+      if (ballTop > brickTop) return DOWN
+      if (ballTop <= brickTop) return UP
     }
     return {
       ...withNewBallDirection(getNewBallNormal()),
-      blocks
+      bricks
     }
   }
   return withNewBallProps({ center: newBallCenter })
