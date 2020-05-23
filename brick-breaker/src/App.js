@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+  
+import React, { Component, useRef, useEffect, useState } from 'react'
 
-function App() {
+import Scene from './components/scene'
+import { registerListener } from './utils'
+
+class App extends Component {
+  render(){
+  const sceneContainer = useRef()
+  const [size, setSize] = useState()
+
+  useEffect(() => {
+    const onResize = () => {
+      const { width, height } = sceneContainer.current.getBoundingClientRect()
+      setSize({ width, height })
+    }
+    const unregisterResizeListener = registerListener('resize', onResize)
+    onResize()
+    return unregisterResizeListener
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div className='page'>
+      <div className='scene-container' ref={sceneContainer}>
+        {size && <Scene width={size.width} height={size.height} />}
+      </div>
     </div>
-  );
+  )
+  }
 }
 
 export default App;
