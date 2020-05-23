@@ -1,16 +1,16 @@
 
 import React, { useRef, useEffect, useState } from 'react'
 
-import Scene from './scene'
+import Gameplay from './gameplay'
 import { registerListener } from '../props'
 
 export default () => {
-  const sceneContainer = useRef()
+  const gameplayContainer = useRef()
   const [size, setSize] = useState()
 
   useEffect(() => {
     const onResize = () => {
-      const { width, height } = sceneContainer.current.getBoundingClientRect()
+      const { width, height } = gameplayContainer.current.getBoundingClientRect()
       setSize({ width, height })
     }
     const unregisterResizeListener = registerListener('resize', onResize)
@@ -20,8 +20,8 @@ export default () => {
 
   return (
     <div className='screen'>
-      <div className='scene-container' ref={sceneContainer}>
-        {size && <Scene width={size.width} height={size.height} />}
+      <div className='gameplay-container' ref={gameplayContainer}>
+        {size && <Gameplay width={size.width} height={size.height} />}
       </div>
     </div>
   )
