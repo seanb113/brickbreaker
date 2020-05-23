@@ -1,5 +1,5 @@
 import Vector from './vector'
-import { flatten, getRandomFrom, withoutElement, updateElement } from '../utils'
+import { flatten, getRandomFrom, withoutElement, updateElement } from '../props'
 
 const PADDLE_AREA = 1 / 3
 const brick_HEIGHT = 1 / 3

@@ -1,9 +1,7 @@
 import React, { useEffect, useReducer } from 'react'
-const Scene = (props) => {
+const Scene = () => {
 
  return(
-     <div></div>
- )
     // <svg width={viewWidth} height={projectDistance(height)} className='scene'>
     //   <Level unit={unit} level={level + 1} />
     //   <Lives

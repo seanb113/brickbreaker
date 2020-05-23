@@ -1,6 +1,6 @@
 import React from 'react'
-import { getRange } from '../utils'
-import { BRICK_MAX_DENSITY } from '../game/levels'
+import { getRange } from '../props'
+import { BRICK_MAX_DENSITY } from './levels'
 
 const colors = getRange(BRICK_MAX_DENSITY).map(i => `rgba(26, 188, 156, ${1 / (BRICK_MAX_DENSITY - i)})`)
 

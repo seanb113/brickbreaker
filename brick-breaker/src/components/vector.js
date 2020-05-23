@@ -1,4 +1,4 @@
-import { toDegrees, toRadians } from '../utils'
+import { toDegrees, toRadians } from '../props'
 
 export default class Vector {
   constructor(x, y) {

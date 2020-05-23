@@ -1,5 +1,5 @@
  
-import { getRange } from '../utils'
+import { getRange } from '../props'
 
 export const brick_MAX_DENSITY = 3
 
