@@ -1,9 +1,9 @@
  
 import { getRange } from '../props'
 
-export const brick_MAX_DENSITY = 3
+export const BRICK_MAX_DENSITY = 3
 
-const getRandombrick = () => Math.floor(Math.random() * brick_MAX_DENSITY)
+const getRandombrick = () => Math.floor(Math.random() * BRICK_MAX_DENSITY)
 
 const getbricks = (rows, columns) =>
   getRange(rows).map(() => getRange(columns).map(getRandombrick))
