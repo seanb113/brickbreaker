@@ -1,6 +1,7 @@
 $height:65;
 $depth:6;
 $color:#478662;
+$paddlecolor: red;
 $text-color:darken($color,10%);
 $lighten-on-hover:7%;
 $button-speed:.06;
@@ -77,19 +78,16 @@ code {
 }
 
 .paddle {
-  background: #109bce;
-  text-shadow: 1px 1px 2px #07526e;
+
 }
 
 .ball {
   display: block;
-  width: 100px;
-  height: 100px;
-  // fill: red;
+  background: black;
   border-radius: 50%;
-  background: -webkit-radial-gradient(25px 25px, circle, red, #000);
-  background: -moz-radial-gradient(25px 25px, circle, red, #000);
-  background: radial-gradient(25px 25px, circle, red, #000);
+  height: 300px;
+  width: 300px;
+  margin: 0;
 }
 
 .level {
