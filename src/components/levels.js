@@ -23,13 +23,13 @@ export const LEVELS = [
   },
   {
     lives: 3,
-    paddleWidth: 1.5,
+    paddleWidth: 2,
     speed: 1.8,
     bricks: getbricks(5, 8)
   },
   {
     lives: 3,
-    paddleWidth: 1,
+    paddleWidth: 1.5,
     speed: 2.2,
     bricks: getbricks(6, 9)
   },

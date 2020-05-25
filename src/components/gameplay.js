@@ -18,6 +18,7 @@ const STOP_KEY = 32
 const UPDATE_EVERY = 1000 / 60
 
 const getInitialLevel = () => {
+  debugger
   const inState = localStorage.getItem('level')
   return inState ? parseInt(inState, 10) : 0
 }
