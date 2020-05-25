@@ -1,13 +1,13 @@
 import { toDegrees, toRadians } from '../props'
 
-export default class Vector {
+export default class Movement {
   constructor(x, y) {
     this.x = x
     this.y = y
   }
 
   scaleBy(number) {
-    return new Vector(this.x * number, this.y * number);
+    return new Movement(this.x * number, this.y * number);
   }
 
   length() {
@@ -15,7 +15,7 @@ export default class Vector {
   }
 
   add({ x, y }) {
-    return new Vector(this.x + x, this.y + y)
+    return new Movement(this.x + x, this.y + y)
   }
 
   normalize() {
@@ -23,7 +23,7 @@ export default class Vector {
   }
 
   subtract({ x, y }) {
-    return new Vector(this.x - x, this.y - y)
+    return new Movement(this.x - x, this.y - y)
   }
 
   dotProduct({ x, y }) {
@@ -32,7 +32,7 @@ export default class Vector {
 
   projectOn(other) {
     const amt = this.dotProduct(other) / other.length()
-    return new Vector(amt * other.x, amt * other.y)
+    return new Movement(amt * other.x, amt * other.y)
   }
 
   reflect(normal) {
@@ -44,7 +44,7 @@ export default class Vector {
     const cos = Math.cos(radians)
     const sin = Math.sin(radians)
 
-    return new Vector(
+    return new Movement(
       this.x * cos - this.y * sin,
       this.x * sin + this.y * cos
     )

@@ -1,4 +1,4 @@
-import Vector from './vector'
+import Movement from './movement'
 import { flatten, getRandomFrom, withoutElement, updateElement } from '../props'
 
 const PADDLE_AREA = 1 / 3
@@ -12,10 +12,10 @@ export const MOVEMENT = {
   RIGHT: 'RIGHT'
 }
 
-const LEFT = new Vector(-1, 0)
-const RIGHT = new Vector(1, 0)
-const UP = new Vector(0, -1)
-const DOWN = new Vector(0, 1)
+const LEFT = new Movement(-1, 0)
+const RIGHT = new Movement(1, 0)
+const UP = new Movement(0, -1)
+const DOWN = new Movement(0, 1)
 
 const LEFT_UP = LEFT.add(UP).normalize()
 const RIGHT_UP = RIGHT.add(UP).normalize()
@@ -23,12 +23,12 @@ const RIGHT_UP = RIGHT.add(UP).normalize()
 export const getInitialPaddleAndBall = (width, height, paddleWidth) => {
   const paddleY = height - PADDLE_HEIGHT
   const paddle = {
-    position: new Vector((width - paddleWidth) / 2, paddleY),
+    position: new Movement((width - paddleWidth) / 2, paddleY),
     width: paddleWidth,
     height: PADDLE_HEIGHT
   }
   const ball = {
-    center: new Vector(height / 2, paddleY - BALL_RADIUS * 2),
+    center: new Movement(height / 2, paddleY - BALL_RADIUS * 2),
     radius: BALL_RADIUS,
     direction: getRandomFrom(LEFT_UP, RIGHT_UP)
   }
@@ -48,7 +48,7 @@ export const getGameStateFromLevel = ({ lives, paddleWidth, speed, bricks }) => 
   const rowsOfbricks = bricks.map((row, i) =>
     row.map((density, j) => ({
       density,
-      position: new Vector(j, bricksStart + (i * brick_HEIGHT)),
+      position: new Movement(j, bricksStart + (i * brick_HEIGHT)),
       width: 1,
       height: brick_HEIGHT
     })
@@ -67,10 +67,10 @@ export const getGameStateFromLevel = ({ lives, paddleWidth, speed, bricks }) => 
   }
 }
 
-const getDistortedDirection = (vector, distortionLevel = 0.3) => {
+const getDistortedDirection = (movement, distortionLevel = 0.3) => {
   const getComponent = () => Math.random() * distortionLevel - distortionLevel / 2
-  const distortion = new Vector(getComponent(), getComponent())
-  return vector.add(distortion).normalize()
+  const distortion = new Movement(getComponent(), getComponent())
+  return movement.add(distortion).normalize()
 }
 
 const getNewPaddle = (paddle, size, distance, movement) => {
@@ -80,7 +80,7 @@ const getNewPaddle = (paddle, size, distance, movement) => {
   const { x } = paddle.position.add(direction.scaleBy(distance))
   const withNewX = x => ({
     ...paddle,
-    position: new Vector(x, paddle.position.y)
+    position: new Movement(x, paddle.position.y)
   })
   if (x < 0) {
     return withNewX(0)
@@ -96,8 +96,8 @@ const isInBoundaries = (oneSide, otherSide, oneBoundary, otherBoundary) => (
   (otherSide >= oneBoundary && otherSide <= otherBoundary)
 )
 
-const getAdjustedVector = (normal, vector, minAngle = 15) => {
-  const angle = normal.angleBetween(vector)
+const getAdjustedMovement = (normal, Movement, minAngle = 15) => {
+  const angle = normal.angleBetween(Movement)
   const maxAngle = 90 - minAngle
   if (angle < 0) {
     if (angle > -minAngle) {
@@ -114,7 +114,7 @@ const getAdjustedVector = (normal, vector, minAngle = 15) => {
       return normal.rotate(maxAngle)
     }
   }
-  return vector
+  return Movement
 }
 
 export const getNewGameState = (state, movement, timespan) => {
@@ -145,7 +145,7 @@ export const getNewGameState = (state, movement, timespan) => {
 
   const withNewBallDirection = normal => {
     const distorted = getDistortedDirection(oldDirection.reflect(normal))
-    const direction = getAdjustedVector(normal, distorted)
+    const direction = getAdjustedMovement(normal, distorted)
     return withNewBallProps({ direction })
   }
   const ballLeft = newBallCenter.x - radius

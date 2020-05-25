@@ -29,20 +29,20 @@ const getProjectors = (containerSize, gameSize) => {
 
   return {
     projectDistance: distance => distance * unitOnScreen,
-    projectVector: vector => vector.scaleBy(unitOnScreen)
+    projectMovement: Movement => Movement.scaleBy(unitOnScreen)
   }
 }
 
 const getInitialState = containerSize => {
   const level = getInitialLevel()
   const game = getGameStateFromLevel(LEVELS[level])
-  const { projectDistance, projectVector } = getProjectors(containerSize, game.size)
+  const { projectDistance, projectMovement } = getProjectors(containerSize, game.size)
   return {
     level,
     game,
     containerSize,
     projectDistance,
-    projectVector,
+    projectMovement,
     time: Date.now(),
     stopTime: undefined,
     movement: undefined
@@ -115,7 +115,7 @@ export default (containerSize) => {
   const act = (type, payload) => dispatch({ type, payload })
   const {
     projectDistance,
-    projectVector,
+    projectMovement,
     level,
     game: {
       bricks,
@@ -163,11 +163,11 @@ export default (containerSize) => {
           key={`${position.x}-${position.y}`}
           width={projectDistance(width)}
           height={projectDistance(height)}
-          {...projectVector(position)}
+          {...projectMovement(position)}
         />)
       )}
-      <Paddle width={projectDistance(paddle.width)} height={projectDistance(paddle.height)} {...projectVector(paddle.position)} />
-      <Ball {...projectVector(ball.center)} radius={unit} />
+      <Paddle width={projectDistance(paddle.width)} height={projectDistance(paddle.height)} {...projectMovement(paddle.position)} />
+      <Ball {...projectMovement(ball.center)} radius={unit} />
     </svg>
   )
 }
