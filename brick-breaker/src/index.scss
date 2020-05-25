@@ -10,7 +10,7 @@ $timing-function: ease-out;
 html {
   height: 100%;
   --text-color: #202020;
-  --action-color: #e74c3c;
+  --action-color: linear-gradient(bottom, rgb(14,137,182) 0%, rgb(22,179,236) 100%);
 }
 
 * {
