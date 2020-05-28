@@ -19,7 +19,7 @@ const UPDATE_EVERY = 1000 / 60
 
 const getInitialLevel = () => {
   debugger
-  const inState = localStorage.getItem('level')
+  const inState = localStorage.setItem('level', 0)
   return inState ? parseInt(inState, 10) : 0
 }
 
@@ -89,7 +89,8 @@ const HANDLER = {
     const newGame = getNewGameState(state.game, state.movement, time - state.time)
     const newState = { ...state, time }
     if (newGame.lives < 1) {
-      return { ...newState, game: getGameStateFromLevel(LEVELS[state.level]) }
+      localStorage.setItem('level', 0)
+      return { ...newState, game: getGameStateFromLevel(LEVELS[0]) }
     } else if (newGame.bricks.length < 1) {
       const level = state.level === LEVELS.length ? state.level : state.level + 1
       localStorage.setItem('level', level)
