@@ -1,6 +1,5 @@
 
 import React, { useRef, useEffect, useState } from 'react'
-
 import Gameplay from './gameplay'
 import { registerListener } from '../props'
 
