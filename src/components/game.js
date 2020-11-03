@@ -118,7 +118,6 @@ const getAdjustedMovement = (normal, Movement, minAngle = 15) => {
 }
 
 export const getNewGameState = (state, movement, timespan) => {
-  debugger
   const { size, speed, lives } = state
   const distance = timespan * DISTANCE_IN_MS * speed
   const paddle = getNewPaddle(state.paddle, size, distance, movement)
